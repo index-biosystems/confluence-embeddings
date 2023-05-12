@@ -15,7 +15,6 @@ allSpaceKeys = ['BIR',
                 'BD',
                 'INDEX',
                 'ITHD',
-                'ITSAMPLE',
                 'EC',
                 'REG',
                 'RD',
@@ -61,10 +60,59 @@ for key, pages in allPages.items():
         content = soup.find("div", id = 'content').get_text(separator=' ')
         allPagesContent[key].append(content)
 
-# Get all the text from each page.
+# Get all the text from each page, add it to a dict where the page is the key and the text is the value.
+
+allPagesText = {}
+
+for key, pages in allPagesContent.items():
+    allPagesText[key] = []
+
+    for page in pages:
+        allPagesText[key].append(page)
 
 # Tokenize the text.
 
-# Convert into an embedding
+allPagesTextTokenized = {}
+
+for key, pages in allPagesText.items():
+    allPagesTextTokenized[key] = []
+
+    for page in pages:
+        allPagesTextTokenized[key].append(openai.Completion.create(
+            engine="davinci",
+            prompt=page,
+            temperature=0,
+            max_tokens=64,
+            top_p=1,
+            frequency_penalty=0,
+            presence_penalty=0,
+            stop=["\n"]
+        )['choices'][0]['text'])
+
+# Get an openai embedding for each page.
+
+allPagesEmbeddings = {}
+
+for key, pages in allPagesTextTokenized.items():
+    allPagesEmbeddings[key] = []
+
+    for page in pages:
+        allPagesEmbeddings[key].append(openai.Embedding.create(page))
 
 # Save the embedding to Pinecone
+
+for key, pages in allPagesEmbeddings.items():
+    for page in pages:
+        pinecone.create_index(key, pinecone.IndexInfo(metric='cosine', shards=1))
+        pinecone.insert(key, page['id'], page['vector'])
+
+# Get the embedding for a page.
+
+def getEmbedding(page):
+    return openai.Embedding.retrieve(page)
+
+# Get the most similar pages to a page.
+
+def getSimilarPages(page, spaceKey):
+    return pinecone.query(spaceKey, page, top_k=5)
+
