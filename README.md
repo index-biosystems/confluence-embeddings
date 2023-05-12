@@ -8,7 +8,9 @@ Clone the repository.
 
 ## Usage
 
-Upd
+1. Create an .env and update the variables.
+2. Select the spaces that you'd like to use by updating the allSpaceKeys list. Also, make sure you update the getAllSpaces variable to true if you don't want to use the pre-selected spaces.
+3. TBD
 
 ## Contributing
 
