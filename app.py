@@ -41,6 +41,8 @@ if getAllSpaces:
     for space in getAllSpaces['results']:
         allSpaceKeys.append(space['key'])
 
+# Else use the predetermined spaces.
+
 allPages = {}
 
 for spaceKey in allSpaceKeys:

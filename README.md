@@ -1,6 +1,6 @@
-# Foobar
+# Confluence Embeddings
 
-ConfEmbeddings is a Python library for creating embeddings from a Confluence knowledgebase.
+Confluence Embeddings is a Python library for creating embeddings from a Confluence knowledgebase.
 
 ## Installation
 
