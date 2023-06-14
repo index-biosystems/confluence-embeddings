@@ -1,6 +1,6 @@
 # Confluence Embeddings
 
-Confluence Embeddings is a simple application that allows users of Atlassian's Confluence knowledgebase to provide OpenAI's GPT LLM with additional proprietary context that is not available on the open internet. 
+Confluence Embeddings is a simple application that allows users of Atlassian's Confluence knowledgebase to provide OpenAI's GPT LLM with additional proprietary context that is not available on the open internet. Be sure to set the correct data controls for your organization if you do not want OpenAI to learn from your interactions.
 
 Once all of your pages in confluence have the correct 'embedding' label (see Usage & Setup for more information), the contextualizer.py script will scrape those labelled pages for content, tokenize that content and create embeddings for upsertion into Pinecone's vector database. The streamlit app will take the prompt entered, do a similarity search on the vector databse, and take the top result from that search and chain that result into a GPT4 prompt question. This is how you can provide GPT4 with proprietary context for your prompts.
 
