@@ -1,0 +1,6 @@
+dotenv
+pinecone
+streamlit
+langchain
+atlassian
+bs4
